@@ -1,0 +1,137 @@
+
+{% load static %}
+<!-- importante para cargar archivos estaticos -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+<nav>
+    <div class="nav-wrapper container ">
+        <a id="logo-container" href="../../../devices/" class="brand-logo" rev="">SNMP App</a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <!-- opciones navegador -->
+        <ul class="right hide-on-med-and-down">
+            <li><a href="../../../devices/">Monitorear Agentes</a></li>
+            <li><a href="../../addDevice/">Agregar Agentes</a></li>
+        </ul>
+
+        <!-- opciones mobiles -->
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="../../../devices/">Monitorear Agentes</a></li>
+            <li><a href="../../addDevice/">Agregar Agentes</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <!--   Parametros   -->
+    <div class="row">
+        <br>
+        <br>
+        <div class="col  m12 center-block " style="  height:auto; ">
+            <div class="col m7 s12">
+                <h2>{{ device.name }}</h2>
+            </div>
+            <div class="col m5  s12 right center-align" style="position:relative;top: 3em;">
+                <div class="col m6" style=""><a class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Iniciar</a>
+                </div>
+                <div class="col m6" style=""><a class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Parar</a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <!-- aqui va el plot   -->
+                    <img src="{% static 'images/sample-1.jpg'%}">
+                    <span class="card-title">Parametro 1</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">Parametro 1</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <!-- aqui va el plot   -->
+                    <img src="{% static 'images/sample-1.jpg'%}">
+                    <span class="card-title">Parametro 2</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">Parametro 2</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <!-- aqui va el plot   -->
+                    <img src="{% static 'images/sample-1.jpg'%}">
+                    <span class="card-title">Parametro 3</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">Parametro 3</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{% static 'images/sample-1.jpg'%}">
+                    <span class="card-title">Parametro 4</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">Parametro 4</a>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{% static 'images/sample-1.jpg'%}">
+                    <span class="card-title">Parametro 5</span>
+                </div>
+                <div class="card-action">
+                    <a href="#">Parametro 5</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+<br><br>
+</div>
+
+<footer class="page-footer ">
+    <br>
+    <br>
+</footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src=" {% static 'js/materialize.js' %}"></script>
+<script>
+    $(".button-collapse").sideNav();
+</script>
+
+</body>
+</html>

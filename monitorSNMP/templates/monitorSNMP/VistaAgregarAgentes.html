@@ -1,0 +1,92 @@
+
+{% load static %}
+<!-- importante para cargar archivos estaticos -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href=" {% static 'css/materialize.min.css' %}"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+<nav>
+    <div class="nav-wrapper container ">
+        <a id="logo-container" href="../../../devices/" class="brand-logo" rev="">SNMP App</a>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+        <!-- opciones navegador -->
+        <ul class="right hide-on-med-and-down">
+            <li><a href="../../../devices/">Monitorear Agentes</a></li>
+            <li><a href="../../addDevice/">Agregar Agentes</a></li>
+        </ul>
+
+        <!-- opciones mobiles -->
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="../../../devices/">Monitorear Agentes</a></li>
+            <li><a href="../../addDevice/">Agregar Agentes</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <form method="POST"  class="col s12 m12 l12 device-form">
+            <div class="card-panel">
+                <h4 class="header2">Agregar Agente</h4>
+                <div class="row">
+                    <form class="col s12">
+                        {% csrf_token %}
+                        {{ device_info.as_p }}
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Agregar
+                                    <i class="mdi-content-send right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="page-footer" style="">
+    <div class="container"><br><br></div>
+</footer>
+
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="  {% static 'js/materialize.js' %} "></script>
+<script>
+    $(document).ready(function(){
+        $(".button-collapse").sideNav();
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal({
+                dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                opacity: .5, // Opacity of modal background
+                inDuration: 300, // Transition in duration
+                outDuration: 200, // Transition out duration
+                startingTop: '4%', // Starting top style attribute
+                endingTop: '10%', // Ending top style attribute
+                ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                    //alert("Ready"); //action toDO
+                    console.log(modal, trigger);
+                },
+                complete: function() {/*behavior to perfomance once modal has been actioned*/
+                   // alert('Closed');
+                                     } // Callback for Modal close
+            }
+        );
+    });
+
+</script>
+
+</body>
+</html>

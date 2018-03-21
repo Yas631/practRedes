@@ -1,6 +1,7 @@
 from django.db import models
 
-class device(models.Model):
+
+class Device(models.Model):
     name = models.CharField(max_length=200)
     SO = models.CharField(max_length=200)
     SNMP_version = models.CharField(max_length=200)
