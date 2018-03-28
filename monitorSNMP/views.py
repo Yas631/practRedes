@@ -8,12 +8,17 @@ from django.shortcuts import redirect
 
 def devices_list(request):
     devicesquery = Device.objects.all()
+    if request.method == 'POST':
+        device_to_eliminate=request.POST["dev"]
+        Device.objects.filter(id=device_to_eliminate).delete()
+        return redirect('../devices/')
     return render(request, 'monitorSNMP/VistaAgentes.html', {'devices': devicesquery})
 
 
 def device_watcher(request, device_id):
     devicequery = Device.objects.get(id=device_id)
     return render(request, 'monitorSNMP/VistaMonitoreo.html', {'device': devicequery})
+
 
 def add_device(request):
     if request.method == 'POST':

@@ -68,21 +68,22 @@
                 </div>
                 <div class="card-action">
 
-                    <a  href="#modal1" class=" waves-effect waves-light btn modal-trigger  red lighten-1">Eliminar</a>
+                    <a  href="#modal{{device.id}}" class=" waves-effect waves-light btn modal-trigger  red lighten-1">Eliminar</a>
                     <a href="/devices/{{device.id}}" class="waves-effect waves-light btn">Monitorear</a>
                 </div>
                 <!-- Modal Structure -->
-                <div id="modal1" class="modal">
+                <form method="POST" id="modal{{device.id}}" class="modal">
+                    {% csrf_token %}
+                    <input class="hide" id="deviceId" type="text" title="" value="{{device.id}}">
                     <div class="modal-content">
                         <h4>Advertencia</h4>
                         <p>Si seleccionas eliminar el dispositivo sera removido </p>
                     </div>
                     <div class="modal-footer">
-                        <a href="#!" id="eliminar1" class="modal-action modal-close waves-effect waves-light  red lighten-1 white-text btn">Eliminar</a>
-                        <a href="#!" id="cancelar1" class="modal-action modal-close waves-effect waves-light    white-text btn">Cancelar</a>
-
+                        <button href=""  id="eliminar_modal{{device.id}}" type="submit" name="dev" value="{{device.id}}" class="deletebtn modal-action modal-close waves-effect waves-light  red lighten-1 white-text btn">Eliminar</button>
+                        <a href="" id="cancelar_modal{{device.id}}" class="modal-action modal-close waves-effect waves-light    white-text btn">Cancelar</a>
                     </div>
-                </div>
+                </form>
                 <!-- Modal Structure ENDs-->
             </div>
         </div>
@@ -108,6 +109,8 @@
 <script src="  {% static 'js/materialize.js' %} "></script>
 <script>
     $(document).ready(function(){
+        ///
+
         $(".button-collapse").sideNav();
         // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
         $('.modal').modal({
@@ -117,17 +120,18 @@
                 outDuration: 200, // Transition out duration
                 startingTop: '4%', // Starting top style attribute
                 endingTop: '10%', // Ending top style attribute
+
                 ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-                    //alert("Ready"); //action toDO
+                    //alert("Ready"); //action toDo
                     console.log(modal, trigger);
                 },
                 complete: function() {/*behavior to perfomance once modal has been actioned*/
-                   // alert('Closed');
+                  // alert('Closed');
                                      } // Callback for Modal close
             }
         );
-    });
 
+    });
 </script>
 
 </body>
