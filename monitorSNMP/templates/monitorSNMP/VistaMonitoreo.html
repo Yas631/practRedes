@@ -12,7 +12,8 @@
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 <body>
 
 <nav>
@@ -57,8 +58,8 @@
             <div class="card">
                 <div class="card-image">
                     <!-- aqui va el plot   -->
-                    <img src="{% static 'images/sample-1.jpg'%}">
                     <span class="card-title">Parametro 1</span>
+                        <div id="sine-graph" style="width: 100%" ></div>
                 </div>
                 <div class="card-action">
                     <a href="#">Parametro 1</a>
@@ -69,8 +70,8 @@
             <div class="card">
                 <div class="card-image">
                     <!-- aqui va el plot   -->
-                    <img src="{% static 'images/sample-1.jpg'%}">
                     <span class="card-title">Parametro 2</span>
+                    <div id="param2"  style="width: 100%"></div>
                 </div>
                 <div class="card-action">
                     <a href="#">Parametro 2</a>
@@ -127,11 +128,53 @@
 
 
 <!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src=" {% static 'js/materialize.js' %}"></script>
 <script>
     $(".button-collapse").sideNav();
 </script>
+<script>
+    var roomName = {{ device.id }};
 
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/graph/' + roomName + '/');
+     var request_data_interval;
+    chatSocket.onopen = function()
+    {
+        // Web Socket is connected, send data using send()
+        chatSocket.send("Message to send");
+        request_data_interval = window.setInterval(requestData, 50);
+    };
+
+    chatSocket.onmessage = function (evt)
+    {
+        var received_msg = evt.data;
+        data = JSON.parse(evt.data);
+        var my_plot = {
+            x: data.x,
+            y: data.y,
+            type: 'scatter'
+        };
+        Plotly.newPlot('sine-graph', [my_plot]);
+
+         var my_plot2 = {
+            x: data.x2,
+            y: data.y2,
+            type: 'scatter'
+        };
+        Plotly.newPlot('param2', [my_plot2]);
+    };
+
+    chatSocket.onclose = function()
+    {
+      // websocket is closed.
+      window.clearInterval(request_data_interval)
+    };
+
+    function requestData()
+    {
+        chatSocket.send("get-data");
+    }
+</script>
 </body>
 </html>
