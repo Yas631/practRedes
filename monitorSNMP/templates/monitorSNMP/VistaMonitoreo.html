@@ -45,9 +45,9 @@
                 <h2>{{ device.name }}</h2>
             </div>
             <div class="col m5  s12 right center-align" style="position:relative;top: 3em;">
-                <div class="col m6" style=""><a class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Iniciar</a>
+                <div class="col m6" style=""><button id="start" class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Iniciar</>
                 </div>
-                <div class="col m6" style=""><a class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Parar</a>
+                <div class="col m6" style=""><button id="stop" class="waves-effect waves-light btn "><i class="material-icons left">cloud</i>Parar</button>
                 </div>
             </div>
         </div>
@@ -59,10 +59,10 @@
                 <div class="card-image">
                     <!-- aqui va el plot   -->
                     <span class="card-title">Parametro 1</span>
-                        <div id="sine-graph" style="width: 100%" ></div>
+                        <div id="param1" style="width: 100%" ></div>
                 </div>
                 <div class="card-action">
-                    <a href="#">Parametro 1</a>
+                    <a href="#">Total ICMP Messages</a>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                     <div id="param2"  style="width: 100%"></div>
                 </div>
                 <div class="card-action">
-                    <a href="#">Parametro 2</a>
+                    <a href="#">Total IP datagrams</a>
                 </div>
             </div>
         </div>
@@ -82,33 +82,34 @@
             <div class="card">
                 <div class="card-image">
                     <!-- aqui va el plot   -->
-                    <img src="{% static 'images/sample-1.jpg'%}">
                     <span class="card-title">Parametro 3</span>
+                    <div id="param3" style="width: 100%" ></div>
                 </div>
                 <div class="card-action">
-                    <a href="#">Parametro 3</a>
+                    <a href="#">Total TCP segments</a>
                 </div>
             </div>
         </div>
         <div class="col s12 m6">
             <div class="card">
                 <div class="card-image">
-                    <img src="{% static 'images/sample-1.jpg'%}">
                     <span class="card-title">Parametro 4</span>
+                    <div id="param4" style="width: 100%" ></div>
+
                 </div>
                 <div class="card-action">
-                    <a href="#">Parametro 4</a>
+                    <a href="#">Total UDP error datagrams</a>
                 </div>
             </div>
         </div>
         <div class="col s12 m6">
             <div class="card">
                 <div class="card-image">
-                    <img src="{% static 'images/sample-1.jpg'%}">
                     <span class="card-title">Parametro 5</span>
+                    <div id="param5" style="width: 100%" ></div>
                 </div>
                 <div class="card-action">
-                    <a href="#">Parametro 5</a>
+                    <a href="#">Total SNMP responses</a>
                 </div>
             </div>
         </div>
@@ -134,7 +135,7 @@
 </script>
 <script>
     var roomName = {{ device.id }};
-
+    var start=true;
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/graph/' + roomName + '/');
@@ -142,27 +143,83 @@
     chatSocket.onopen = function()
     {
         // Web Socket is connected, send data using send()
-        chatSocket.send("Message to send");
-        request_data_interval = window.setInterval(requestData, 50);
+        chatSocket.send({{ device.id }});
+        request_data_interval = window.setInterval(requestData, 80);
     };
 
     chatSocket.onmessage = function (evt)
     {
-        var received_msg = evt.data;
-        data = JSON.parse(evt.data);
-        var my_plot = {
-            x: data.x,
-            y: data.y,
-            type: 'scatter'
-        };
-        Plotly.newPlot('sine-graph', [my_plot]);
+        if(start) {
+            var received_msg = evt.data;
+            data = JSON.parse(evt.data);
+            var my_plot = {
+                x: data.x,
+                y: data.y,
+                type: 'scatter',
+                name: 'Input'
+            };
+            var my_plot1= {
+                x: data.x,
+                y: data.y1,
+                type: 'scatter',
+                name: 'Output'
+            };
+            var my_plot2 = {
+                x: data.x,
+                y: data.y2,
+                type: 'scatter',
+                name: 'Input'
+            };
+            var my_plot3 = {
+                x: data.x,
+                y: data.y3,
+                type: 'scatter',
+                name: 'Output'
+            };
+            var my_plot4 = {
+                x: data.x,
+                y: data.y4,
+                type: 'scatter',
+                name: 'Input'
+            };
+            var my_plot5 = {
+                x: data.x,
+                y: data.y5,
+                type: 'scatter',
+                name: 'Output'
+            };
+            var my_plot6 = {
+                x: data.x,
+                y: data.y6,
+                type: 'scatter',
+                name: 'Input'
+            };
+            var my_plot7 = {
+                x: data.x,
+                y: data.y7,
+                type: 'scatter',
+                name: 'Input'
+            };
+            var my_plot8 = {
+                x: data.x,
+                y: data.y8,
+                type: 'scatter',
+                name: 'Output'
+            };
 
-         var my_plot2 = {
-            x: data.x2,
-            y: data.y2,
-            type: 'scatter'
-        };
-        Plotly.newPlot('param2', [my_plot2]);
+
+
+            var data_param1=[my_plot,my_plot1];
+            var data_param2=[my_plot2,my_plot3];
+            var data_param3=[my_plot4,my_plot5];
+            var data_param5=[my_plot7,my_plot8];
+            Plotly.newPlot('param1',data_param1);
+            Plotly.newPlot('param2',data_param2);
+            Plotly.newPlot('param3',data_param3);
+            Plotly.newPlot('param4', [my_plot6]);
+            Plotly.newPlot('param5',data_param5);
+
+        }
     };
 
     chatSocket.onclose = function()
@@ -171,9 +228,15 @@
       window.clearInterval(request_data_interval)
     };
 
+    document.getElementById('start').addEventListener('click',function (ev) {
+        start=true;
+    });
+     document.getElementById('stop').addEventListener('click',function (ev) {
+        start=false;
+     });
     function requestData()
     {
-        chatSocket.send("get-data");
+        chatSocket.send({{ device.id }});
     }
 </script>
 </body>
